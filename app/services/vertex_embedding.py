@@ -2,7 +2,7 @@
 from vertexai.language_models import TextEmbeddingModel
 
 # You must init VertexAI in your main before calling this
-model = TextEmbeddingModel.from_pretrained("textembedding-gecko@001")
+model = TextEmbeddingModel.from_pretrained("gemini-embedding-001")
 
 def chunk_text(text: str, max_chunk_chars: int = 1000):
     # Naive line-based chunker for now (improve later)
@@ -20,5 +20,7 @@ def chunk_text(text: str, max_chunk_chars: int = 1000):
 
 def embed_text_chunks(text: str):
     chunks = chunk_text(text)
-    embeddings = [model.get_embeddings([chunk])[0].values for chunk in chunks]
+    # Remove empty or whitespace-only chunks
+    clean_chunks = [chunk for chunk in chunks if chunk.strip()]
+    embeddings = [model.get_embeddings([chunk])[0].values for chunk in clean_chunks]
     return embeddings

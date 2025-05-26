@@ -8,7 +8,6 @@ router = APIRouter()
 
 class DocInput(BaseModel):
     text: str
-    room_id: str
 
 @router.post("/duplicate-check")
 def check_duplicate(doc: DocInput):
@@ -16,14 +15,16 @@ def check_duplicate(doc: DocInput):
     avg_vector = [sum(dim) / len(embeddings) for dim in zip(*embeddings)]
 
     neighbors = find_nearest_neighbors(avg_vector)
-    if not neighbors:
-        return {"is_duplicate": False}
+
+    if not neighbors:  # This guards against the crash
+        return {"is_duplicate": False, "match_score": None, "embeddings": embeddings[0]}
 
     top_score = neighbors[0].distance
     print("Top match score:", top_score)
 
-    is_duplicate = top_score < 0.1  # You can tune this threshold
+    is_duplicate = top_score > 0.98  # You can tune this threshold
     return {
         "is_duplicate": is_duplicate,
-        "match_score": top_score
+        "match_score": top_score,
+        "embeddings" : embeddings[0],
     }
