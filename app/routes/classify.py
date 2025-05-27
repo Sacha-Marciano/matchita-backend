@@ -7,10 +7,12 @@ router = APIRouter()
 
 class TextInput(BaseModel):
     text: str
+    folders : list[str]
+    tags : list[str]
 
 @router.post("/classify")
-def classify(text_input: TextInput):
-    result = classify_document(text_input.text)
+def classify(input_data: TextInput):
+    result = classify_document(input_data.text,input_data.folders, input_data.tags)
     if not result:
         return {"error": "Gemini classification failed"}
     return result
