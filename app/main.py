@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import embed, classify
+from app.routes import embed, classify, rank, extract
 import vertexai
 
 app = FastAPI()
@@ -18,3 +18,5 @@ app.add_middleware(
 
 app.include_router(embed.router)
 app.include_router(classify.router)
+app.include_router(rank.router)
+app.include_router(extract.router)

@@ -1,6 +1,6 @@
 To run in dec :
 build env :
-venv\Scripts\activate
+source venv/Scripts/activate
 then:
 uvicorn app.main:app --reload
 
