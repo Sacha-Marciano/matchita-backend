@@ -17,15 +17,16 @@ def classify_document(text: str, folders: list[str] , tags: list[str] ):
         f"You are an intelligent assistant. Classify the following document with:\n"
         f"- A descriptive title\n"
         f"- A folder name (short, thematic)\n"
-        f"- 5 tags\n\n"
+        f"- 5 tags\n"
+        f"- A teaser for VCs and stakeholders\n\n"
         f" Here is a list of existing folders that you may use if a folders matches for the following document : \n"
         f"{folders}\n\n"
         f"Only use the existing folders if they match perfectly, otherwise create new ones.\n"
         f"Here is a list of existing tags that you may use if a tag matches for the following document : \n"
         f"{tags}\n\n"
         f"Only use the existing tags if they match perfectly, otherwise create new ones.Be very specific when creating new tags\n"
-        f"Respond only in JSON format with: \"title\", \"folder\", and \"tags\",  \n" 
-        f"{{\"title\": \"title\",\"folder\":\"folder\",\"tags\":\"tags\"}}\n\n"
+        f"Respond only in JSON format with: \"title\", \"folder\",\"tags\" and \"teaser\" \n" 
+        f"{{\"title\": \"title\",\"folder\":\"folder\",\"tags\":\"tags\",\"teaser\":\"teaser\"}}\n\n"
         f"Document:\n"
         f"{text[:4000]}"
     )
@@ -39,7 +40,8 @@ def classify_document(text: str, folders: list[str] , tags: list[str] ):
         return {
             "title": parsed["title"],
             "folder": parsed["folder"],
-            "tags": parsed["tags"]
+            "tags": parsed["tags"],
+            "teaser": parsed["teaser"]
         }
     except Exception as e:
         print("Gemini parse failed:", e)
