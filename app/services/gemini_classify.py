@@ -12,7 +12,7 @@ def clean_json_response(response_text: str):
         response_text = re.sub(r"\n?```$", "", response_text)
     return response_text
 
-def classify_document(text: str, folders: list[str] , tags: list[str] ):
+def classify_document(title: str, text: str, folders: list[str] , tags: list[str] ):
     prompt = (
         f"You are an intelligent assistant. Classify the following document with:\n"
         f"- A descriptive title\n"
@@ -29,7 +29,10 @@ def classify_document(text: str, folders: list[str] , tags: list[str] ):
         f"Respond only in JSON format with: \"title\", \"folder\",\"tags\" and \"teaser\" \n" 
         f"{{\"title\": \"title\",\"folder\":\"folder\",\"tags\":\"tags\",\"teaser\":\"teaser\"}}\n\n"
         f"Document:\n"
-        f"{text[:4000]}"
+        f"Title:\n"
+        f"{title}"
+        f"Text:\n"
+        f"{text}"
     )
 
     response = gemini.generate_content(prompt)
