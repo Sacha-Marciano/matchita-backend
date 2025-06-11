@@ -24,6 +24,7 @@ def extract_answer(question: str, text: str ):
         f"Document :\n"
         f"{text}\n\n"
         f"Include the exact text you fetched your answer from"
+        f"Always respond to the question in the language of the question"
         f"Respond only in JSON format with the following fields:\n"
         f"{{\"found\": true, \"answer\": \"...\", \"text_source\": \"...\"}}"
         f"If no answer was found respond this JSON:\n"
